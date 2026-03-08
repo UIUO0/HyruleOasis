@@ -53,10 +53,11 @@ export default function EmulationMobilePage() {
           <details className="mobile-emu-card">
             <summary>عصر السويتش (Sudachi Android)</summary>
             <p className="body">أشهر ألعابه: Tears of the Kingdom, Echoes of Wisdom.</p>
-            <div className="emu-actions">
-              <button type="button" className="cta emu-btn emu-btn-primary">تحميل محاكي Sudachi بصيغة APK</button>
-              <button type="button" className="cta emu-btn emu-btn-outline">تحميل ملفات المفاتيح Prod Keys</button>
-              <button type="button" className="cta emu-btn emu-btn-outline">تحميل نظام التشغيل Firmware</button>
+            <div className="emu-actions" style={{ alignItems: "center", gap: "10px", flexWrap: "wrap", display: "flex" }}>
+              <a href="https://sudachiemulator.org" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل محاكي Sudachi</a>
+              <span className="emu-note" style={{ fontSize: "0.85rem", opacity: 0.8 }}>(ملاحظة: اختار جوالك من داخل الموقع، مثلاً أندرويد انزل لين تحصل زر Download for Android)</span>
+              <a href="https://prodkeys.net/yuzu-prod-keys-n28/" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-outline">تحميل ملفات المفاتيح Prod Keys</a>
+              <a href="https://prodkeys.net/latest-switch-firmwares-v19/" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-outline">تحميل نظام التشغيل Firmware</a>
             </div>
             <ol className="emu-steps">
               <li>ثبت التطبيق وافتحه.</li>
@@ -70,7 +71,7 @@ export default function EmulationMobilePage() {
             <summary>عصر الكلاسيكيات 3D (Dolphin Official)</summary>
             <p className="body">أشهر ألعابه: Wind Waker, Twilight Princess.</p>
             <div className="emu-actions">
-              <button type="button" className="cta emu-btn emu-btn-primary">تحميل محاكي Dolphin من Play Store</button>
+              <a href="https://play.google.com/store/apps/details?id=org.dolphinemu.dolphinemu" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل محاكي Dolphin من Play Store</a>
             </div>
             <ol className="emu-steps">
               <li>حمل التطبيق وافتحه.</li>
@@ -82,8 +83,9 @@ export default function EmulationMobilePage() {
           <details className="mobile-emu-card">
             <summary>عصر الـ 3DS المحمول (Lime3DS)</summary>
             <p className="body">أشهر ألعابه: A Link Between Worlds.</p>
-            <div className="emu-actions">
-              <button type="button" className="cta emu-btn emu-btn-primary">تحميل محاكي Lime3DS بصيغة APK</button>
+            <div className="emu-actions" style={{ alignItems: "center", gap: "10px", flexWrap: "wrap", display: "flex" }}>
+              <a href="https://lime3ds.net/download/" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل محاكي Lime3DS بصيغة APK</a>
+              <span className="emu-note" style={{ fontSize: "0.85rem", opacity: 0.8 }}>(ملاحظة: تأكد من اختيار ملف التحميل الصحيح والمناسب لنسخة جهازك من الموقع)</span>
             </div>
             <ol className="emu-steps">
               <li>ثبت التطبيق وافتحه.</li>
@@ -96,7 +98,7 @@ export default function EmulationMobilePage() {
             <summary>آلة الزمن للأجزاء القديمة (Lemuroid)</summary>
             <p className="body">أشهر ألعابه: كل الأجزاء المؤسسة للسلسلة (NES, SNES, N64, GameBoy).</p>
             <div className="emu-actions">
-              <button type="button" className="cta emu-btn emu-btn-primary">تحميل Lemuroid من Play Store</button>
+              <a href="https://play.google.com/store/apps/details?id=com.swordfish.lemuroid" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل Lemuroid من Play Store</a>
             </div>
             <ol className="emu-steps">
               <li>هذا أسهل تطبيق أندرويد! لا يحتاج "أنوية" ولا تعقيد.</li>
@@ -126,7 +128,7 @@ export default function EmulationMobilePage() {
               أشهر ألعابه: الأجزاء الكلاسيكية (Ocarina of Time, Minish Cap, A Link to the Past, Phantom Hourglass).
             </p>
             <div className="emu-actions">
-              <button type="button" className="cta emu-btn emu-btn-primary">تحميل Delta من App Store</button>
+              <a href="https://apps.apple.com/sa/app/delta-game-emulator/id1048524688" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل Delta من App Store</a>
             </div>
             <ol className="emu-steps">
               <li>حمل التطبيق وافتحه.</li>
@@ -140,7 +142,7 @@ export default function EmulationMobilePage() {
             <summary>عصر الـ 3DS المحمول (Folium)</summary>
             <p className="body">أشهر ألعابه: A Link Between Worlds والنسخ المحسنة للـ 64.</p>
             <div className="emu-actions">
-              <button type="button" className="cta emu-btn emu-btn-primary">تحميل Folium من App Store</button>
+              <a href="https://apps.apple.com/sa/app/folium/id6498623389" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل Folium من App Store</a>
             </div>
             <ol className="emu-steps">
               <li>حمل التطبيق من المتجر (ملاحظة: يحتاج آيفون حديث بمعالج قوي).</li>
@@ -152,9 +154,9 @@ export default function EmulationMobilePage() {
           <details className="mobile-emu-card">
             <summary>عصر السويتش (Sudachi iOS)</summary>
             <p className="body">أشهر ألعابه: Breath of the Wild, Tears of the Kingdom.</p>
-            <div className="emu-actions">
-              <button type="button" className="cta emu-btn emu-btn-primary">تحميل Sudachi بصيغة IPA</button>
-              <button type="button" className="cta emu-btn emu-btn-outline">تحميل ملفات المفاتيح Prod Keys</button>
+            <div className="emu-actions" style={{ alignItems: "center", gap: "10px", flexWrap: "wrap", display: "flex" }}>
+              <a href="https://sudachiemulator.org/sudachi-emulator-for-ios/" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل Sudachi بصيغة IPA</a>
+              <a href="https://prodkeys.net/yuzu-prod-keys-n28/" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-outline">تحميل ملفات المفاتيح Prod Keys</a>
             </div>
             <p className="kicker" style={{ marginTop: "0.7rem" }}>خطوات التشغيل (للمحترفين)</p>
             <ol className="emu-steps">

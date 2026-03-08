@@ -142,7 +142,7 @@ export default function GamesIndexPage() {
 
         {filteredList.length === 0 && (
           <div className="games-no-results">
-            <p>🔎 ما لقينا شي بهذا الاسم.. جرب تبحث باسم ثاني!</p>
+            <p>🔎 ما لقيت شي بهذا الاسم.. جرب تبحث باسم ثاني!</p>
           </div>
         )}
 

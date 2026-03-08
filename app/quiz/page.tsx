@@ -236,7 +236,7 @@ export default function QuizPage() {
           >
             <p className="kicker">السؤال 1 من {totalSteps - 1}</p>
             <h2 className="title">هل قد لعبت لعبة من السلسلة من قبل؟</h2>
-            <p className="body">حدد الألعاب اللي لعبتها عشان نستبعدها من الترشيح. لو ما لعبت شيء تخطّى هالخطوة.</p>
+            <p className="body">حدد الألعاب اللي لعبتها عشان أستبعدها من الترشيح. لو ما لعبت شيء تخطّى هالخطوة.</p>
 
             <div className="quiz-checkbox-grid">
               {allGames.map((g) => (
@@ -436,7 +436,7 @@ export default function QuizPage() {
                 <span className="quiz-empty-emoji">🏆</span>
                 <h2 className="title">يا سلام! لعبتها كلها!</h2>
                 <p className="body">
-                  ما قدرنا نلقى لك لعبة جديدة بناءً على اختياراتك. جرّب تعدّل
+                  ما قدرت ألقى لك لعبة جديدة بناءً على اختياراتك. جرّب تعدّل
                   الأجهزة أو الألعاب اللي لعبتها.
                 </p>
               </div>
