@@ -51,7 +51,7 @@ export default function GamesIndexPage() {
   const allGames = getAllGames();
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState<SortKey>("oldest");
+  const [sortBy, setSortBy] = useState<SortKey>("newest");
 
   const filteredList = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
