@@ -1,79 +1,458 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  loadPreferredStyle,
-  loadRecommendation,
-  savePreferredStyle,
-  saveRecommendation
-} from "@/lib/quizStorage";
+  getAllGamesForCheckbox,
+  needsVibeQuestion,
+  recommend,
+  type StoryInterest,
+  type Vibe,
+  type Platform,
+  type QuizAnswers,
+} from "@/lib/quizEngine";
+import { gameAssetPath } from "@/lib/gameAssets";
+import { loadQuizState, saveQuizState, clearQuizState, EMPTY_STATE, type QuizState } from "@/lib/quizStorage";
+import { getGame } from "@/lib/games";
 
-const quizOptions = [
-  "استكشاف عالم مفتوح",
-  "ألغاز وأسرار",
-  "مواجهات ملحمية"
-] as const;
-
-const recommendationMap: Record<(typeof quizOptions)[number], string> = {
-  "استكشاف عالم مفتوح": "The Legend of Zelda: Breath of the Wild",
-  "ألغاز وأسرار": "The Legend of Zelda: Link's Awakening",
-  "مواجهات ملحمية": "The Legend of Zelda: Twilight Princess"
+/* ─── Animation variants ─── */
+const slideVariants = {
+  enter: (dir: number) => ({ x: dir > 0 ? 260 : -260, opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit: (dir: number) => ({ x: dir > 0 ? -260 : 260, opacity: 0 }),
 };
 
+const springTransition = { type: "spring", stiffness: 320, damping: 32 } as const;
+
+/* ─── Constants ─── */
+const STORY_OPTIONS: { value: StoryInterest; label: string; desc: string }[] = [
+  {
+    value: "deep_lore",
+    label: "مهتم بالتفاصيل الكاملة",
+    desc: "أبغى أفهم كل شيء — اللور، الخطوط الزمنية، والتاريخ العميق للسلسلة من البداية.",
+  },
+  {
+    value: "core_narrative",
+    label: "الأساسيات بس",
+    desc: "أبغى أعرف أهم وأثقل الألعاب في القصة والأحداث الجوهرية.",
+  },
+  {
+    value: "modern_peak",
+    label: "عطني الخلاصة",
+    desc: "أبغى ذروة السلسلة تقنياً وقصصياً. أبدأ مباشرة بالأجزاء الحديثة.",
+  },
+];
+
+const PLATFORM_OPTIONS: { value: Platform; label: string; icon: string }[] = [
+  { value: "pc", label: "كمبيوتر", icon: "🖥️" },
+  { value: "android", label: "أندرويد", icon: "📱" },
+  { value: "ios", label: "آيفون", icon: "🍎" },
+  { value: "switch", label: "نينتندو سويتش", icon: "🎮" },
+];
+
+const VIBE_OPTIONS: { value: Vibe; label: string; desc: string; emoji: string }[] = [
+  {
+    value: "dark",
+    label: "جو سوداوي ومظلم",
+    desc: "قصة فيها توتر، عالم واقعي قاسي، وأجواء غامضة.",
+    emoji: "🌑",
+  },
+  {
+    value: "bright",
+    label: "جو ملون ومشرق",
+    desc: "استكشاف بحري، عالم مليء بالأمل والمحيطات والألوان.",
+    emoji: "🌊",
+  },
+  {
+    value: "classic",
+    label: "جو كلاسيكي بحت",
+    desc: "عالم يواجه الدمار، والتركيز كله على الألغاز والمتاهات.",
+    emoji: "🏰",
+  },
+];
+
+/* ─── Main component ─── */
 export default function QuizPage() {
-  const [selected, setSelected] = useState<string>(() => loadPreferredStyle());
-  const [savedRecommendation, setSavedRecommendation] = useState<string>(() => loadRecommendation());
+  const allGames = useMemo(() => getAllGamesForCheckbox(), []);
 
-  const recommendation = selected
-    ? recommendationMap[selected as keyof typeof recommendationMap]
-    : savedRecommendation;
+  const [state, setState] = useState<QuizState>(() => loadQuizState());
+  const [step, setStep] = useState(0); // 0‑4 (0=Q1...3=Q4, 4=result)
+  const [direction, setDirection] = useState(1);
 
-  const handleSelect = (value: string) => {
-    const nextRecommendation = recommendationMap[value as keyof typeof recommendationMap];
-    setSelected(value);
-    savePreferredStyle(value);
-    setSavedRecommendation(nextRecommendation);
-    saveRecommendation(nextRecommendation);
-  };
+  /* ─── helpers ─── */
+  const persist = useCallback((next: QuizState) => {
+    setState(next);
+    saveQuizState(next);
+  }, []);
+
+  const goNext = useCallback(() => {
+    setDirection(1);
+    setStep((s) => s + 1);
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setDirection(-1);
+    setStep((s) => Math.max(0, s - 1));
+  }, []);
+
+  const restart = useCallback(() => {
+    clearQuizState();
+    setState({ ...EMPTY_STATE });
+    setDirection(-1);
+    setStep(0);
+  }, []);
+
+  /* ─── Q1: toggle played game ─── */
+  const togglePlayed = useCallback(
+    (slug: string) => {
+      const next = { ...state };
+      const idx = next.playedSlugs.indexOf(slug);
+      if (idx >= 0) {
+        next.playedSlugs = next.playedSlugs.filter((s) => s !== slug);
+      } else {
+        next.playedSlugs = [...next.playedSlugs, slug];
+      }
+      persist(next);
+    },
+    [state, persist]
+  );
+
+  /* ─── Q2: story interest ─── */
+  const pickStory = useCallback(
+    (v: StoryInterest) => {
+      persist({ ...state, storyInterest: v });
+    },
+    [state, persist]
+  );
+
+  /* ─── Q3: toggle platform ─── */
+  const togglePlatform = useCallback(
+    (p: Platform) => {
+      const next = { ...state };
+      const idx = next.platforms.indexOf(p);
+      if (idx >= 0) {
+        next.platforms = next.platforms.filter((x) => x !== p);
+      } else {
+        next.platforms = [...next.platforms, p];
+      }
+      persist(next);
+    },
+    [state, persist]
+  );
+
+  /* ─── Q4: vibe ─── */
+  const pickVibe = useCallback(
+    (v: Vibe) => {
+      persist({ ...state, vibe: v });
+    },
+    [state, persist]
+  );
+
+  /* ─── Advance from Q3: decide if we skip Q4 ─── */
+  const advanceFromQ3 = useCallback(() => {
+    const skipQ4 = !needsVibeQuestion({
+      playedSlugs: state.playedSlugs,
+      storyInterest: state.storyInterest as StoryInterest,
+      platforms: state.platforms,
+    });
+
+    if (skipQ4) {
+      // Compute result immediately, skip to result screen
+      const result = recommend({
+        playedSlugs: state.playedSlugs,
+        storyInterest: state.storyInterest as StoryInterest,
+        platforms: state.platforms,
+        vibe: "dark", // doesn't matter, foundation has result
+      });
+      persist({ ...state, resultSlug: result?.slug ?? null });
+      setDirection(1);
+      setStep(4); // jump to result
+    } else {
+      goNext(); // go to Q4
+    }
+  }, [state, persist, goNext]);
+
+  /* ─── Advance from Q4: compute result ─── */
+  const advanceFromQ4 = useCallback(() => {
+    const result = recommend({
+      playedSlugs: state.playedSlugs,
+      storyInterest: state.storyInterest as StoryInterest,
+      platforms: state.platforms,
+      vibe: state.vibe as Vibe,
+    });
+    persist({ ...state, resultSlug: result?.slug ?? null });
+    goNext();
+  }, [state, persist, goNext]);
+
+  /* ─── Determine total visible steps (for progress dots) ─── */
+  const showQ4 =
+    state.storyInterest &&
+    state.platforms.length > 0 &&
+    needsVibeQuestion({
+      playedSlugs: state.playedSlugs,
+      storyInterest: state.storyInterest as StoryInterest,
+      platforms: state.platforms,
+    });
+
+  const totalSteps = showQ4 ? 5 : 4; // Q1 Q2 Q3 [Q4] Result
+
+  /* ─── Can advance? ─── */
+  const canNext =
+    step === 0 ? true : // Q1 can be skipped
+      step === 1 ? !!state.storyInterest :
+        step === 2 ? state.platforms.length > 0 :
+          step === 3 ? !!state.vibe :
+            false;
+
+  /* ─── Result game ─── */
+  const resultGame = step === 4 && state.resultSlug ? getGame(state.resultSlug) : null;
 
   return (
-    <main className="section">
-      <article className="panel" style={{ width: "min(780px, 100%)" }}>
-        <p className="kicker">اختبار البداية</p>
-        <h1 className="title">حدد جوّك ونرشّح لك أول لعبة</h1>
-        <p className="body">
-          النسخة الحالية بدون تسجيل دخول. تفضيلك ينحفظ محلياً في متصفحك عشان ترجع له لاحقاً بسرعة.
-        </p>
+    <main className="section quiz-shell">
+      {/* ─── Progress dots ─── */}
+      <div className="quiz-progress">
+        {Array.from({ length: totalSteps }).map((_, i) => (
+          <span
+            key={i}
+            className={`quiz-dot${i === step || (step === 4 && i === totalSteps - 1) ? " is-active" : ""}${i < step ? " is-done" : ""}`}
+          />
+        ))}
+      </div>
 
-        <div style={{ display: "grid", gap: "0.8rem", marginTop: "1.5rem" }}>
-          {quizOptions.map((option) => (
-            <button
-              key={option}
-              type="button"
-              className="cta"
-              style={{
-                width: "100%",
-                textAlign: "right",
-                borderColor: option === selected ? "rgba(46, 163, 154, 0.88)" : undefined
-              }}
-              onClick={() => handleSelect(option)}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
+      {/* ─── Steps ─── */}
+      <AnimatePresence mode="wait" custom={direction}>
+        {step === 0 && (
+          <motion.article
+            key="q1"
+            className="panel quiz-step"
+            style={{ width: "min(1060px, 100%)" }}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={springTransition}
+          >
+            <p className="kicker">السؤال 1 من {totalSteps - 1}</p>
+            <h2 className="title">هل قد لعبت لعبة من السلسلة من قبل؟</h2>
+            <p className="body">حدد الألعاب اللي لعبتها عشان نستبعدها من الترشيح. لو ما لعبت شيء تخطّى هالخطوة.</p>
 
-        {recommendation ? (
-          <p className="body" style={{ marginTop: "1.4rem" }}>
-            ترشيحك الحالي: <strong>{recommendation}</strong>
-          </p>
-        ) : null}
+            <div className="quiz-checkbox-grid">
+              {allGames.map((g) => (
+                <button
+                  key={g.slug}
+                  type="button"
+                  className={`quiz-checkbox-card${state.playedSlugs.includes(g.slug) ? " is-checked" : ""}`}
+                  onClick={() => togglePlayed(g.slug)}
+                >
+                  <img
+                    src={gameAssetPath(g.slug, "cover", undefined, g.assetExt)}
+                    alt={g.displayTitle}
+                  />
+                  <span className="quiz-checkbox-label">{g.displayTitle}</span>
+                  <span className="quiz-checkbox-mark" aria-hidden>
+                    {state.playedSlugs.includes(g.slug) ? "✓" : ""}
+                  </span>
+                </button>
+              ))}
+            </div>
 
-        <Link className="cta" href="/" style={{ marginTop: "2rem", display: "inline-flex" }}>
-          الرجوع للصفحة الرئيسية
-        </Link>
-      </article>
+            <div className="quiz-nav">
+              <span />
+              <button className="cta" type="button" onClick={goNext}>
+                التالي ←
+              </button>
+            </div>
+          </motion.article>
+        )}
+
+        {step === 1 && (
+          <motion.article
+            key="q2"
+            className="panel quiz-step"
+            style={{ width: "min(820px, 100%)" }}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={springTransition}
+          >
+            <p className="kicker">السؤال 2 من {totalSteps - 1}</p>
+            <h2 className="title">وش نوع اهتمامك بقصة السلسلة؟</h2>
+            <p className="body">السلسلة لها خط زمني ضخم وتاريخ عميق. اختر النهج اللي يناسبك.</p>
+
+            <div className="quiz-radio-group">
+              {STORY_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  className={`quiz-radio-card${state.storyInterest === opt.value ? " is-selected" : ""}`}
+                  onClick={() => pickStory(opt.value)}
+                >
+                  <strong>{opt.label}</strong>
+                  <span>{opt.desc}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="quiz-nav">
+              <button className="cta" type="button" onClick={goPrev}>
+                → السابق
+              </button>
+              <button className="cta" type="button" onClick={goNext} disabled={!canNext}>
+                التالي ←
+              </button>
+            </div>
+          </motion.article>
+        )}
+
+        {step === 2 && (
+          <motion.article
+            key="q3"
+            className="panel quiz-step"
+            style={{ width: "min(820px, 100%)" }}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={springTransition}
+          >
+            <p className="kicker">السؤال 3 من {totalSteps - 1}</p>
+            <h2 className="title">وش الأجهزة المتوفرة عندك؟</h2>
+            <p className="body">اختر كل الأجهزة اللي تقدر تلعب عليها حالياً.</p>
+
+            <div className="quiz-pill-group">
+              {PLATFORM_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  className={`quiz-pill${state.platforms.includes(opt.value) ? " is-active" : ""}`}
+                  onClick={() => togglePlatform(opt.value)}
+                >
+                  <span className="quiz-pill-icon">{opt.icon}</span>
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="quiz-nav">
+              <button className="cta" type="button" onClick={goPrev}>
+                → السابق
+              </button>
+              <button
+                className="cta"
+                type="button"
+                onClick={advanceFromQ3}
+                disabled={!canNext}
+              >
+                التالي ←
+              </button>
+            </div>
+          </motion.article>
+        )}
+
+        {step === 3 && (
+          <motion.article
+            key="q4"
+            className="panel quiz-step"
+            style={{ width: "min(820px, 100%)" }}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={springTransition}
+          >
+            <p className="kicker">السؤال 4 من {totalSteps - 1}</p>
+            <h2 className="title">أي جو (Vibe) يشدك تكمل فيه مغامرتك؟</h2>
+            <p className="body">
+              لو افترضنا إنك وصلت لمفترق طرق في عالم السلسلة، أي اتجاه تختار؟
+            </p>
+
+            <div className="quiz-radio-group">
+              {VIBE_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  className={`quiz-radio-card${state.vibe === opt.value ? " is-selected" : ""}`}
+                  onClick={() => pickVibe(opt.value)}
+                >
+                  <span className="quiz-vibe-emoji">{opt.emoji}</span>
+                  <strong>{opt.label}</strong>
+                  <span>{opt.desc}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="quiz-nav">
+              <button className="cta" type="button" onClick={goPrev}>
+                → السابق
+              </button>
+              <button className="cta" type="button" onClick={advanceFromQ4} disabled={!canNext}>
+                شوف النتيجة ←
+              </button>
+            </div>
+          </motion.article>
+        )}
+
+        {step === 4 && (
+          <motion.article
+            key="result"
+            className="panel quiz-step"
+            style={{ width: "min(820px, 100%)" }}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={springTransition}
+          >
+            {resultGame ? (
+              <>
+                <p className="kicker">🎯 ترشيحك</p>
+                <h2 className="title">لعبتك القادمة</h2>
+
+                <div className="quiz-result-card">
+                  <img
+                    className="quiz-result-cover"
+                    src={gameAssetPath(resultGame.slug, "cover", undefined, resultGame.assetExt)}
+                    alt={resultGame.displayTitle}
+                  />
+                  <div className="quiz-result-info">
+                    <h3 className="quiz-result-title">{resultGame.displayTitle}</h3>
+                    <p className="quiz-result-subtitle">{resultGame.subtitleAr}</p>
+                    <p className="quiz-result-synopsis">{resultGame.synopsisAr}</p>
+                    <Link className="cta" href={`/games/${resultGame.slug}`}>
+                      شوف تفاصيل اللعبة
+                    </Link>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="quiz-empty-state">
+                <span className="quiz-empty-emoji">🏆</span>
+                <h2 className="title">يا سلام! لعبتها كلها!</h2>
+                <p className="body">
+                  ما قدرنا نلقى لك لعبة جديدة بناءً على اختياراتك. جرّب تعدّل
+                  الأجهزة أو الألعاب اللي لعبتها.
+                </p>
+              </div>
+            )}
+
+            <div className="quiz-nav">
+              <button className="cta" type="button" onClick={restart}>
+                أعد الاختبار من البداية
+              </button>
+              <Link className="cta" href="/">
+                الصفحة الرئيسية
+              </Link>
+            </div>
+          </motion.article>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

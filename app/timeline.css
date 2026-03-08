@@ -1,0 +1,406 @@
+/* ═══════════════════════════════════════════
+   TIMELINE PAGE STYLES
+   ═══════════════════════════════════════════ */
+
+.timeline-page {
+    position: relative;
+    min-height: 100vh;
+    padding: 6rem 1rem 4rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.particles-container {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #070c17, #0a111f);
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.timeline-header {
+    text-align: center;
+    max-width: 800px;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 10;
+}
+
+.timeline-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+}
+
+.timeline-tree {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.timeline-phase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.timeline-phase.pt-0 {
+    padding-top: 0;
+}
+
+/* Nodes */
+.timeline-node {
+    background: rgba(10, 15, 26, 0.85);
+    border: 1px solid rgba(224, 184, 79, 0.4);
+    border-radius: 12px;
+    padding: 1.2rem;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
+    position: relative;
+    z-index: 5;
+    backdrop-filter: blur(8px);
+    text-decoration: none;
+    display: block;
+}
+
+.timeline-node:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(224, 184, 79, 0.15);
+    border-color: rgba(224, 184, 79, 0.8);
+}
+
+.timeline-node .year {
+    display: block;
+    font-family: monospace;
+    color: #f6d889;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    opacity: 0.9;
+}
+
+.timeline-node .name {
+    display: block;
+    font-family: var(--font-kufi), sans-serif;
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-node .desc {
+    display: block;
+    color: #a0aec0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.timeline-node .badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2ea39a;
+    color: #fff;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.node-secondary {
+    width: 240px;
+    padding: 1rem;
+}
+
+.node-secondary .name {
+    font-size: 1.05rem;
+}
+
+.node-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Lines */
+.vertical-line {
+    width: 2px;
+    height: 40px;
+    background: rgba(224, 184, 79, 0.6);
+    margin: 0 auto;
+}
+
+.horizontal-dotted-line {
+    height: 2px;
+    border-bottom: 2px dashed rgba(224, 184, 79, 0.4);
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+}
+
+.down-line {
+    width: 2px;
+    background: rgba(224, 184, 79, 0.6);
+    margin: 0 auto;
+    flex-grow: 1;
+}
+
+.down-line.dotted {
+    background: transparent;
+    border-left: 2px dashed rgba(224, 184, 79, 0.4);
+}
+
+.to-convergence {
+    height: 60px;
+}
+
+/* Side Branches */
+.side-branch {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.right-branch {
+    left: calc(100% + 40px);
+}
+
+.right-branch .horizontal-dotted-line {
+    width: 40px;
+    right: 100%;
+}
+
+.left-branch {
+    right: calc(100% + 40px);
+}
+
+.left-branch .horizontal-dotted-line {
+    width: 40px;
+    left: 100%;
+}
+
+.left-branch.offset-1 {
+    top: 50px;
+}
+
+.left-branch.offset-2 {
+    top: 180px;
+}
+
+/* Branch Container (The Split) */
+.timeline-branches {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    margin: 2rem 0;
+    position: relative;
+    padding-top: 2rem;
+}
+
+/* The top horizontal connection line for the split */
+.timeline-branches::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(16.5% + 140px);
+    /* Adjust based on column centers */
+    right: calc(16.5% + 140px);
+    height: 2px;
+    background: rgba(224, 184, 79, 0.6);
+}
+
+.branch-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 320px;
+    position: relative;
+}
+
+/* Connect column to top horizontal line */
+.branch-col::before {
+    content: "";
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    width: 2px;
+    height: 2rem;
+    background: rgba(224, 184, 79, 0.6);
+    transform: translateX(-50%);
+}
+
+.branch-title {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-family: var(--font-kufi), sans-serif;
+    color: white;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Borders based on Timeline */
+.border-yellow .timeline-node {
+    border-color: rgba(224, 184, 79, 0.5);
+}
+
+.border-yellow .timeline-node:hover {
+    border-color: rgba(224, 184, 79, 1);
+    box-shadow: 0 0 20px rgba(224, 184, 79, 0.2);
+}
+
+.border-yellow .vertical-line,
+.border-yellow .down-line {
+    background: rgba(224, 184, 79, 0.5);
+}
+
+.border-purple .timeline-node,
+.border-purple .branch-title {
+    border-color: rgba(168, 85, 247, 0.5);
+}
+
+.border-purple .timeline-node:hover {
+    border-color: rgba(168, 85, 247, 1);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+.border-purple .vertical-line,
+.border-purple .down-line,
+.border-purple::before {
+    background: rgba(168, 85, 247, 0.5);
+}
+
+.border-blue .timeline-node,
+.border-blue .branch-title {
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.border-blue .timeline-node:hover {
+    border-color: rgba(59, 130, 246, 1);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+.border-blue .vertical-line,
+.border-blue .down-line,
+.border-blue::before {
+    background: rgba(59, 130, 246, 0.5);
+}
+
+.border-red .timeline-node,
+.border-red .branch-title {
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+.border-red .timeline-node:hover {
+    border-color: rgba(239, 68, 68, 1);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+.border-red .vertical-line,
+.border-red .down-line,
+.border-red::before {
+    background: rgba(239, 68, 68, 0.5);
+}
+
+.border-brown {
+    border-color: rgba(180, 83, 9, 0.6) !important;
+}
+
+.border-brown:hover {
+    border-color: rgba(217, 119, 6, 1) !important;
+    box-shadow: 0 0 20px rgba(217, 119, 6, 0.2) !important;
+}
+
+/* Labels */
+.split-label,
+.convergence-point {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.split-label span,
+.convergence-point span {
+    background: linear-gradient(135deg, rgba(224, 184, 79, 0.2), rgba(224, 184, 79, 0.05));
+    border: 1px solid rgba(224, 184, 79, 0.5);
+    padding: 0.6rem 2rem;
+    border-radius: 30px;
+    color: #f6d889;
+    font-weight: bold;
+    font-size: 1.1rem;
+    z-index: 2;
+    backdrop-filter: blur(4px);
+}
+
+/* Convergence styles */
+.convergence-point {
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+.convergence-point::before {
+    content: "";
+    position: absolute;
+    top: -2rem;
+    /* Matches the .to-convergence height */
+    left: calc(16.5% + 140px);
+    right: calc(16.5% + 140px);
+    height: 2px;
+    border-bottom: 2px dashed rgba(224, 184, 79, 0.6);
+}
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+    .timeline-branches {
+        flex-direction: column;
+        align-items: center;
+        gap: 4rem;
+    }
+
+    .timeline-branches::before,
+    .convergence-point::before,
+    .branch-col::before {
+        display: none;
+    }
+
+    .side-branch {
+        position: relative;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        margin-top: 1rem;
+    }
+
+    .horizontal-dotted-line {
+        display: none;
+    }
+
+    .node-group {
+        gap: 1.5rem;
+    }
+}

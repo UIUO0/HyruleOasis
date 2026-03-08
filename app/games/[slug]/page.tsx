@@ -49,29 +49,47 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
                 </p>
                 <p className="kicker" style={{ marginTop: "1rem" }}>منصة اللعبة</p>
                 <p className="body" style={{ marginTop: 0 }}>
-                  جهاز نينتيندو الرسمي
-                  <br />
-                  Yuzu على البيسي
-                  <br />
-                  Sudachi / Suyu عالجوال الاندرويد
-                  <br />
-                  Delta على الايفون
+                  {game.platformsAr.map((platform, index) => (
+                    <span key={platform}>
+                      {platform}
+                      {index < game.platformsAr.length - 1 ? <br /> : null}
+                    </span>
+                  ))}
                 </p>
                 <div className="game-hero-actions">
                   <PlatformPickerButton />
-                  <a
-                    className="cta"
-                    href="https://nswpedia.com/download/the-legend-of-zelda-skyward-sword-hd-nsp-23-12819/2/download_list"
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ display: "inline-flex" }}
-                  >
-                    تحميل اللعبة
-                  </a>
+                  {game.downloadUnavailable ? (
+                    <span
+                      className="cta"
+                      style={{
+                        display: "inline-flex",
+                        opacity: 0.45,
+                        cursor: "not-allowed",
+                        userSelect: "none",
+                        filter: "grayscale(1)",
+                      }}
+                      title="غير متوفر"
+                    >
+                      🔒 مو متوفر نسخة للمحاكيات للأسف، إذا عندك تواصل معي
+                    </span>
+                  ) : (
+                    <a
+                      className="cta"
+                      href={game.downloadUrl ?? "#"}
+                      style={{ display: "inline-flex" }}
+                    >
+                      تحميل اللعبة
+                    </a>
+                  )}
                   <Link className="cta" href="/games" style={{ display: "inline-flex" }}>
                     رجوع لقائمة الألعاب
                   </Link>
                 </div>
+                {game.downloadNote && (
+                  <p className="body" style={{ marginTop: "0.8rem", opacity: 0.75, fontStyle: "italic", fontSize: "0.92em" }}>
+                    {game.downloadNote}
+                  </p>
+                )}
                 <p className="body" style={{ marginTop: "1rem" }}>
                   بعد ما تثبتها بشكل قانوني، حطها في مجلد العابك الي ربطته مع المحاكي و بتظهرلك و استمتع.
                 </p>

@@ -1,30 +1,40 @@
-export const QUIZ_STORAGE_KEY = "hyrule-oasis.quiz.preferred-style";
-export const QUIZ_RESULT_KEY = "hyrule-oasis.quiz.recommendation";
+import type { StoryInterest, Vibe, Platform } from "./quizEngine";
 
-export function loadPreferredStyle() {
-  if (typeof window === "undefined") {
-    return "";
-  }
-  return window.localStorage.getItem(QUIZ_STORAGE_KEY) ?? "";
+const QUIZ_STATE_KEY = "hyrule-oasis.quiz-v2";
+
+export interface QuizState {
+  playedSlugs: string[];
+  storyInterest: StoryInterest | "";
+  platforms: Platform[];
+  vibe: Vibe | "";
+  resultSlug: string | null;
 }
 
-export function savePreferredStyle(value: string) {
-  if (typeof window === "undefined") {
-    return;
+export const EMPTY_STATE: QuizState = {
+  playedSlugs: [],
+  storyInterest: "",
+  platforms: [],
+  vibe: "",
+  resultSlug: null,
+};
+
+export function loadQuizState(): QuizState {
+  if (typeof window === "undefined") return { ...EMPTY_STATE };
+  try {
+    const raw = window.localStorage.getItem(QUIZ_STATE_KEY);
+    if (!raw) return { ...EMPTY_STATE };
+    return { ...EMPTY_STATE, ...JSON.parse(raw) };
+  } catch {
+    return { ...EMPTY_STATE };
   }
-  window.localStorage.setItem(QUIZ_STORAGE_KEY, value);
 }
 
-export function loadRecommendation() {
-  if (typeof window === "undefined") {
-    return "";
-  }
-  return window.localStorage.getItem(QUIZ_RESULT_KEY) ?? "";
+export function saveQuizState(state: QuizState) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(QUIZ_STATE_KEY, JSON.stringify(state));
 }
 
-export function saveRecommendation(value: string) {
-  if (typeof window === "undefined") {
-    return;
-  }
-  window.localStorage.setItem(QUIZ_RESULT_KEY, value);
+export function clearQuizState() {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(QUIZ_STATE_KEY);
 }
