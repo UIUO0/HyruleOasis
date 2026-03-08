@@ -45,6 +45,11 @@ export default function EmulationMobilePage() {
           <h2 className="title">أصحاب الأندرويد - الحرية الكاملة!</h2>
           <p className="body">جهازك الأندرويد هو حرفياً "جهاز نينتندو متنقل". المحاكيات هنا قوية جداً وتدعم كل شيء.</p>
 
+          <div className="emu-note" style={{ margin: "1.5rem 0", padding: "1rem", backgroundColor: "rgba(224, 184, 79, 0.1)", borderRadius: "8px", border: "1px solid rgba(224, 184, 79, 0.3)" }}>
+            <p className="body" style={{ margin: 0, marginBottom: "0.8rem" }}>اختار المحاكي حسب الي تدعمه لعبتك، لسى ما اخترت لعبتك؟ روح هنا</p>
+            <Link className="cta emu-btn emu-btn-primary" href="/games" style={{ display: "inline-block" }}>مكتبة الألعاب</Link>
+          </div>
+
           <details className="mobile-emu-card">
             <summary>عصر السويتش (Sudachi Android)</summary>
             <p className="body">أشهر ألعابه: Tears of the Kingdom, Echoes of Wisdom.</p>
@@ -109,6 +114,11 @@ export default function EmulationMobilePage() {
           <p className="body">
             نظام أبل انفتح أخيراً، وصار يمديك تلعب أغلب أجزاء زيلدا بدون "جيلبريك" وبشكل رسمي من المتجر.
           </p>
+
+          <div className="emu-note" style={{ margin: "1.5rem 0", padding: "1rem", backgroundColor: "rgba(224, 184, 79, 0.1)", borderRadius: "8px", border: "1px solid rgba(224, 184, 79, 0.3)" }}>
+            <p className="body" style={{ margin: 0, marginBottom: "0.8rem" }}>اختار المحاكي حسب الي تدعمه لعبتك، لسى ما اخترت لعبتك؟ روح هنا</p>
+            <Link className="cta emu-btn emu-btn-primary" href="/games" style={{ display: "inline-block" }}>مكتبة الألعاب</Link>
+          </div>
 
           <details className="mobile-emu-card">
             <summary>آلة الزمن (Delta)</summary>

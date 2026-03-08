@@ -11,6 +11,11 @@ export default function EmulationPcPage() {
           كل اللي بنسويه هو إننا نثبت المشغل، ونعطيه بعض الملفات الأساسية ليشتغل صح.. وبس!
         </p>
         <p className="body">اختر العصر الذي تريد لعبه، واتبع الخطوات:</p>
+
+        <div className="emu-note" style={{ marginTop: "1.5rem", padding: "1rem", backgroundColor: "rgba(224, 184, 79, 0.1)", borderRadius: "8px", border: "1px solid rgba(224, 184, 79, 0.3)" }}>
+          <p className="body" style={{ margin: 0, marginBottom: "0.8rem" }}>اختار المحاكي حسب الي تدعمه لعبتك، لسى ما اخترت لعبتك؟ روح هنا</p>
+          <Link className="cta emu-btn emu-btn-primary" href="/games" style={{ display: "inline-block" }}>مكتبة الألعاب</Link>
+        </div>
       </article>
 
       <section className="emu-era-grid">
