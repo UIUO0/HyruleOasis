@@ -6,9 +6,33 @@ import ParticlesBackground from "./ParticlesBackground";
 import GradualBlur from "@/components/GradualBlur";
 import "../timeline.css";
 
+// Helper component for nodes
+const GameNode = ({ slug, year, name, desc, isSecondary = false, badge = null }: { slug: string, year: string, name: string, desc: string, isSecondary?: boolean, badge?: string | null }) => (
+    <Link href={`/games/${slug}`} className={`timeline-node ${isSecondary ? 'node-secondary' : ''}`}>
+        {badge && <span className="badge">{badge}</span>}
+        <img src={`/images/games/${slug}/cover.webp`} alt={name} className="node-cover" loading="lazy" />
+        <div className="node-content">
+            <span className="year">{year}</span>
+            <span className="name">{name}</span>
+            <span className="desc">{desc}</span>
+        </div>
+    </Link>
+);
+
 export default function TimelinePage() {
     return (
         <main className="timeline-page">
+            <video
+                className="timeline-bg-video"
+                autoPlay
+                loop
+                muted
+                playsInline
+                src="/videos/universe-bg.mp4"
+            />
+            <div className="timeline-video-overlay" />
+            <div className="timeline-grain-layer" />
+
             <ParticlesBackground />
             <GradualBlur preset="page-footer" />
 
@@ -24,31 +48,20 @@ export default function TimelinePage() {
 
                     {/* Phase 1: Foundation */}
                     <div className="timeline-phase border-yellow">
-                        <Link href="/games/skyward-sword" className="timeline-node">
-                            <span className="year">2011</span>
-                            <span className="name">Skyward Sword</span>
-                            <span className="desc">فجر التاريخ، نشأة السيف واللعنة الأبدية</span>
-                        </Link>
+                        <GameNode slug="skyward-sword" year="2011" name="Skyward Sword" desc="فجر التاريخ، نشأة السيف واللعنة الأبدية" />
 
-                        <div className="vertical-line"></div>
-
-                        <div className="node-group">
-                            <Link href="/games/ocarina-of-time" className="timeline-node">
-                                <span className="year">1998</span>
-                                <span className="name">Ocarina of Time</span>
-                                <span className="desc">النقطة المفصلية وبداية الصراع</span>
-                            </Link>
-
-                            {/* Minish Cap Side Branch */}
-                            <div className="side-branch right-branch">
-                                <div className="horizontal-dotted-line"></div>
-                                <Link href="/games/the-minish-cap" className="timeline-node node-secondary border-brown">
-                                    <span className="badge">للعب الخفيف 📱</span>
-                                    <span className="year">2004</span>
-                                    <span className="name">The Minish Cap</span>
-                                    <span className="desc">قصة فرعية خفيفة</span>
-                                </Link>
+                        <div className="path-segment">
+                            <div className="vertical-line tall-line"></div>
+                            <div className="side-branch right-branch border-brown">
+                                <div className="branch-arm border-yellow"></div>
+                                <GameNode slug="the-minish-cap" year="2004" name="The Minish Cap" desc="قصة فرعية خفيفة" isSecondary badge="للعب الخفيف 📱" />
                             </div>
+                        </div>
+
+                        <GameNode slug="ocarina-of-time" year="1998" name="Ocarina of Time" desc="النقطة المفصلية وبداية الصراع" />
+
+                        <div className="path-segment">
+                            <div className="vertical-line to-convergence"></div>
                         </div>
                     </div>
 
@@ -63,90 +76,63 @@ export default function TimelinePage() {
                         <div className="branch-col border-purple">
                             <div className="branch-title">مسار البالغ</div>
 
-                            <div className="vertical-line"></div>
-                            <Link href="/games/wind-waker" className="timeline-node">
-                                <span className="year">2002</span>
-                                <span className="name">The Wind Waker</span>
-                                <span className="desc">عالم أغرقته المياه وحبس الشر</span>
-                            </Link>
+                            <div className="path-segment"><div className="vertical-line"></div></div>
+                            <GameNode slug="wind-waker" year="2002" name="The Wind Waker" desc="عالم أغرقته المياه وحبس الشر" />
 
-                            <div className="vertical-line"></div>
-                            <Link href="/games/phantom-hourglass" className="timeline-node">
-                                <span className="year">2007</span>
-                                <span className="name">Phantom Hourglass</span>
-                                <span className="desc">تكملة في رحلة بحرية جديدة</span>
-                            </Link>
+                            <div className="path-segment"><div className="vertical-line"></div></div>
+                            <GameNode slug="phantom-hourglass" year="2007" name="Phantom Hourglass" desc="تكملة في رحلة بحرية جديدة" />
 
-                            <div className="vertical-line"></div>
-                            <Link href="/games/spirit-tracks" className="timeline-node">
-                                <span className="year">2009</span>
-                                <span className="name">Spirit Tracks</span>
-                                <span className="desc">بعد 100 سنة، تأسيس مملكة تعتمد على القطارات</span>
-                            </Link>
-                            <div className="down-line dotted to-convergence"></div>
+                            <div className="path-segment"><div className="vertical-line"></div></div>
+                            <GameNode slug="spirit-tracks" year="2009" name="Spirit Tracks" desc="بعد 100 سنة، تأسيس مملكة تعتمد على القطارات" />
+
+                            <div className="path-segment flex-grow">
+                                <div className="vertical-line dotted to-convergence"></div>
+                            </div>
                         </div>
 
                         {/* Branch B: Child Timeline */}
                         <div className="branch-col border-blue">
                             <div className="branch-title">مسار الطفل</div>
 
-                            <div className="vertical-line"></div>
-                            <Link href="/games/majoras-mask" className="timeline-node">
-                                <span className="year">2000</span>
-                                <span className="name">Majora's Mask</span>
-                                <span className="desc">تكملة مباشرة في عالم موازي</span>
-                            </Link>
+                            <div className="path-segment"><div className="vertical-line"></div></div>
+                            <GameNode slug="majoras-mask" year="2000" name="Majora's Mask" desc="تكملة مباشرة في عالم موازي" />
 
-                            <div className="vertical-line"></div>
-                            <Link href="/games/twilight-princess" className="timeline-node">
-                                <span className="year">2006</span>
-                                <span className="name">Twilight Princess</span>
-                                <span className="desc">بعد مئات السنين، لقاء مع شبح البطل القديم</span>
-                            </Link>
-                            <div className="down-line dotted to-convergence"></div>
+                            <div className="path-segment"><div className="vertical-line"></div></div>
+                            <GameNode slug="twilight-princess" year="2006" name="Twilight Princess" desc="بعد مئات السنين، لقاء مع شبح البطل القديم" />
+
+                            <div className="path-segment flex-grow">
+                                <div className="vertical-line dotted to-convergence"></div>
+                            </div>
                         </div>
 
                         {/* Branch C: Downfall Timeline */}
                         <div className="branch-col border-red">
                             <div className="branch-title">مسار البطل المهزوم</div>
 
-                            <div className="vertical-line"></div>
+                            <div className="path-segment"><div className="vertical-line"></div></div>
+                            <GameNode slug="a-link-to-the-past" year="1991" name="A Link to the Past" desc="عصور مظلمة وتراجع للمملكة" />
 
-                            <div className="node-group">
-                                <Link href="/games/a-link-to-the-past" className="timeline-node">
-                                    <span className="year">1991</span>
-                                    <span className="name">A Link to the Past</span>
-                                    <span className="desc">عصور مظلمة وتراجع للمملكة</span>
-                                </Link>
-
-                                <div className="side-branch left-branch offset-1">
-                                    <div className="horizontal-dotted-line"></div>
-                                    <Link href="/games/links-awakening" className="timeline-node node-secondary border-brown">
-                                        <span className="badge">للعب الخفيف 📱</span>
-                                        <span className="year">1993</span>
-                                        <span className="name">Link's Awakening</span>
-                                        <span className="desc">مغامرة جانبية في جزيرة</span>
-                                    </Link>
-                                </div>
-
-                                <div className="side-branch left-branch offset-2">
-                                    <div className="horizontal-dotted-line"></div>
-                                    <Link href="/games/a-link-between-worlds" className="timeline-node node-secondary border-brown">
-                                        <span className="badge">للعب الخفيف 📱</span>
-                                        <span className="year">2013</span>
-                                        <span className="name">A Link Between Worlds</span>
-                                        <span className="desc">أسلوب لعب سريع ومبتكر</span>
-                                    </Link>
+                            <div className="path-segment">
+                                <div className="vertical-line tall-line"></div>
+                                <div className="side-branch left-branch border-brown">
+                                    <div className="branch-arm border-red"></div>
+                                    <GameNode slug="links-awakening" year="1993" name="Link's Awakening" desc="مغامرة جانبية في جزيرة" isSecondary badge="للعب الخفيف 📱" />
                                 </div>
                             </div>
 
-                            <div className="vertical-line"></div>
-                            <Link href="/games/the-legend-of-zelda" className="timeline-node">
-                                <span className="year">1986/87</span>
-                                <span className="name">Zelda 1 & Zelda 2</span>
-                                <span className="desc">نهاية الخط الزمني الكلاسيكي في أراضي قاحلة</span>
-                            </Link>
-                            <div className="down-line dotted to-convergence"></div>
+                            <div className="path-segment">
+                                <div className="vertical-line tall-line"></div>
+                                <div className="side-branch right-branch border-brown">
+                                    <div className="branch-arm border-red"></div>
+                                    <GameNode slug="a-link-between-worlds" year="2013" name="A Link Between Worlds" desc="أسلوب لعب سريع ومبتكر" isSecondary badge="للعب الخفيف 📱" />
+                                </div>
+                            </div>
+
+                            <GameNode slug="the-legend-of-zelda" year="1986/87" name="Zelda 1 & Zelda 2" desc="نهاية الخط الزمني الكلاسيكي في أراضي قاحلة" />
+
+                            <div className="path-segment flex-grow">
+                                <div className="vertical-line dotted to-convergence"></div>
+                            </div>
                         </div>
 
                     </div>
@@ -157,11 +143,13 @@ export default function TimelinePage() {
 
                     {/* Phase 3: The Convergence */}
                     <div className="timeline-phase border-yellow pt-0">
-                        <Link href="/games/breath-of-the-wild" className="timeline-node mt-0">
-                            <span className="year">2017</span>
-                            <span className="name">Breath of the Wild</span>
-                            <span className="desc">بعد عشرات الآلاف من السنين، حيث تلاشت تفاصيل التاريخ القديم</span>
-                        </Link>
+                        <div className="path-segment" style={{ height: "40px" }}><div className="vertical-line dotted"></div></div>
+
+                        <GameNode slug="breath-of-the-wild" year="2017" name="Breath of the Wild" desc="بعد عشرات الآلاف من السنين، حيث تلاشت تفاصيل التاريخ القديم" />
+
+                        <div className="path-segment"><div className="vertical-line"></div></div>
+
+                        <GameNode slug="tears-of-the-kingdom" year="2023" name="Tears of the Kingdom" desc="تكملة مباشرة لاستكشاف أعماق وسماء المملكة" />
                     </div>
 
                 </div>
