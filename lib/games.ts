@@ -218,7 +218,7 @@ const gamesList: Game[] = [
     synopsisAr: "مغامرة تبدأ فوق الغيوم وتنزل إلى السطح. تركّز على الألغاز، الدنجنز المصممة بعناية، وتطور الرابط بين البطل ومصيره.",
     releaseDate: "2011-11-18",
     platformsAr: ["جهاز نينتيندو الرسمي", "Ryujinx على البيسي", "Sudachi / Suyu عالجوال الاندرويد"],
-    downloadUrl: "#",
+    downloadUrl: "https://nswpedia.com/download/the-legend-of-zelda-skyward-sword-hd-nsp-23-12819",
     popularity: 8,
     storyOrder: 1,
     assetExt: "webp",
