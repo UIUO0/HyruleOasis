@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PlatformPickerButton } from "@/components/PlatformPickerButton";
+import { NativePcPortBanner } from "@/components/NativePcPortBanner";
 import { gameAssetPath } from "@/lib/gameAssets";
 import { getGame } from "@/lib/games";
 
@@ -85,6 +86,7 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
                     رجوع لقائمة الألعاب
                   </Link>
                 </div>
+                {game.slug === "ocarina-of-time" && <NativePcPortBanner />}
                 {game.downloadNote && (
                   <p className="body" style={{ marginTop: "0.8rem", opacity: 0.75, fontStyle: "italic", fontSize: "0.92em" }}>
                     {game.downloadNote}
