@@ -78,8 +78,9 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
                       className="cta"
                       href={game.downloadUrl ?? "#"}
                       style={{ display: "inline-flex" }}
+                      target={["zelda-game-watch-1989", "zeldas-adventure"].includes(game.slug) ? "_blank" : "_self"}
                     >
-                      تحميل اللعبة
+                      {["zelda-game-watch-1989", "zeldas-adventure"].includes(game.slug) ? "العب الآن من المتصفح مباشرة" : "تحميل اللعبة"}
                     </a>
                   )}
                   <Link className="cta" href="/games" style={{ display: "inline-flex" }}>
