@@ -177,7 +177,7 @@ export default function EmulationPcPage() {
             <a className="cta emu-btn" href="https://melonds.kuribo64.net/downloads.php" target="_blank" rel="noreferrer">
               تحميل MelonDS
             </a>
-            <a className="cta emu-btn" href="https://archive.org/details/nds-firmware-bios.-7z" target="_blank" rel="noreferrer">
+            <a className="cta emu-btn" href="https://archive.org/download/nds-firmware-bios.-7z" target="_blank" rel="noreferrer">
               تحميل ملفات NDS BIOS
             </a>
           </div>
@@ -213,7 +213,7 @@ export default function EmulationPcPage() {
             <a className="cta emu-btn" href="https://www.mamedev.org/release.html" target="_blank" rel="noreferrer">
               تحميل MAME
             </a>
-            <a className="cta emu-btn" href="https://archive.org/details/mamebios" target="_blank" rel="noreferrer">
+            <a className="cta emu-btn" href="https://www.retrostic.com/bios/mame-0133" target="_blank" rel="noreferrer">
               تحميل ملفات BIOS للأجهزة النادرة
             </a>
           </div>
@@ -232,7 +232,7 @@ export default function EmulationPcPage() {
             <a className="cta emu-btn" href="https://github.com/cdifan/cdiemu" target="_blank" rel="noreferrer">
               تحميل CDiEmu
             </a>
-            <a className="cta emu-btn" href="https://archive.org/details/philips-cd-i-bios" target="_blank" rel="noreferrer">
+            <a className="cta emu-btn" href="https://www.cdiemu.org/?body=site/download.htm" target="_blank" rel="noreferrer">
               تحميل ملفات CD-i BIOS
             </a>
           </div>
@@ -243,22 +243,7 @@ export default function EmulationPcPage() {
           </ol>
         </article>
 
-        <article className="panel emu-era-panel">
-          <p className="kicker">10</p>
-          <h2 className="title">محاكيات بديلة (Suyu و Citra)</h2>
-          <p className="kicker">الملفات المطلوبة</p>
-          <div className="emu-actions">
-            <a className="cta emu-btn" href="https://github.com/suyu-emu/suyu/releases" target="_blank" rel="noreferrer">
-              تحميل Suyu (بديل لـ Ryujinx)
-            </a>
-            <a className="cta emu-btn" href="https://github.com/PabloMK7/citra/releases" target="_blank" rel="noreferrer">
-              تحميل Citra (بديل لـ Lime3DS)
-            </a>
-          </div>
-          <p className="body">
-            تعمل بنفس طريقة المحاكيات الأساسية. قم بتحميل المحاكي، أضف ملفات الـ Keys والـ Firmware (في حالة Suyu)، ثم حدد مجلد الألعاب من الإعدادات ليتم إدراجها في القائمة.
-          </p>
-        </article>
+
       </section>
 
       <article className="panel emu-footer-panel">

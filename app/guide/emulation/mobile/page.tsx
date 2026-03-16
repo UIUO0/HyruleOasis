@@ -112,7 +112,7 @@ export default function EmulationMobilePage() {
           <details className="mobile-emu-card">
             <summary>تطبيق DraStic (لألعاب جهاز DS)</summary>
             <div className="emu-actions">
-              <a href="https://play.google.com/store/search?q=drastic%20ds%20emulator&c=apps" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل DraStic</a>
+              <a href="https://drastic.en.uptodown.com/android/download" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل DraStic</a>
             </div>
             <ol className="emu-steps">
               <li>قم بتثبيت التطبيق وافتحه (لا يحتاج ملفات BIOS).</li>
@@ -137,7 +137,7 @@ export default function EmulationMobilePage() {
             <summary>تطبيق RetroArch للأندرويد (لتشغيل ألعاب CD-i والكلاسيكيات)</summary>
             <div className="emu-actions" style={{ alignItems: "center", gap: "10px", flexWrap: "wrap", display: "flex" }}>
               <a href="https://www.retroarch.com/?page=platforms" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل RetroArch للأندرويد</a>
-              <a href="https://archive.org/details/philips-cd-i-bios" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-outline">تحميل ملفات CD-i BIOS</a>
+              <a href="https://www.cdiemu.org/?body=site/download.htm" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-outline">تحميل ملفات CD-i BIOS</a>
             </div>
             <ol className="emu-steps">
               <li>حمل التطبيق وافتحه.</li>
@@ -147,15 +147,7 @@ export default function EmulationMobilePage() {
             </ol>
           </details>
 
-          <details className="mobile-emu-card">
-            <summary>محاكيات بديلة (Yuzu و Suyu و Citra للأندرويد)</summary>
-            <div className="emu-actions" style={{ alignItems: "center", gap: "10px", flexWrap: "wrap", display: "flex" }}>
-              <a href="https://github.com/yuzu-emu/yuzu-android/releases" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل Yuzu للأندرويد</a>
-              <a href="https://github.com/suyu-emu/suyu/releases" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل Suyu للأندرويد</a>
-              <a href="https://github.com/PabloMK7/citra/releases" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-outline">تحميل Citra للأندرويد</a>
-            </div>
-            <p className="body">ثبت التطبيق، أضف ملفات prod.keys (لمحاكيات السويتش)، ثم اضغط على زر + أو Add Folder لاختيار مجلد الألعاب.</p>
-          </details>
+
         </article>
 
         <article className={`panel mobile-emu-column ios ${activeTab === "ios" ? "is-active" : ""}`}>
