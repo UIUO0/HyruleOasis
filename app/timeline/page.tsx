@@ -39,7 +39,7 @@ export default function TimelinePage() {
             <div className="timeline-header">
                 <h1 className="title">الخط الزمني لسلسلة The Legend of Zelda 🗡️</h1>
                 <p className="body">
-                    رسم بياني تفريعي يوضح ترابط قصة السلسلة — مرتب حسب تسلسل الأحداث وليس تاريخ الإصدار.
+                    ألعاب السلسلة تتجاوز 40+ لعبة، لكن هذا المخطط يركز على الألعاب الأهم قصصياً — مرتب حسب تسلسل الأحداث وليس تاريخ الإصدار.
                 </p>
             </div>
 
@@ -58,12 +58,33 @@ export default function TimelinePage() {
                             </div>
                         </div>
 
-                        <GameNode slug="ocarina-of-time" year="1998" name="Ocarina of Time" desc="النقطة المفصلية وبداية الصراع" />
+                        <GameNode slug="ocarina-of-time-3d" year="1998" name="Ocarina of Time 3D" desc="النقطة المفصلية وبداية الصراع" />
 
                         <div className="path-segment">
                             <div className="vertical-line to-convergence"></div>
                         </div>
                     </div>
+
+                    <section className="timeline-alert" role="note" aria-label="نصيحة واحة هايرول للمسار الأمثل">
+                        <h2>💡 نصيحة "واحة هايرول" للمسار الأمثل</h2>
+                        <p>
+                            لتحقيق أقصى متعة وفهم كامل للقصة الملحمية، ننصحك بشدة بعد الوصول للانقسام العظيم بلعب المسارات بهذا الترتيب، وتأجيل "المستقبل السحيق" للنهاية:
+                        </p>
+                        <ul>
+                            <li>
+                                <strong>مسار الطفل (Child Timeline):</strong> ابدأ به فوراً، لأنه التكملة المباشرة والأثقل سينمائياً ونفسياً.
+                            </li>
+                            <li>
+                                <strong>مسار البالغ (Adult Timeline):</strong> انتقل إليه لتعيش ملحمة مختلفة ومؤثرة تكسر كآبة المسار السابق.
+                            </li>
+                            <li>
+                                <strong>مسار البطل المهزوم (Fallen Hero Timeline):</strong> العبه للعودة لجذور الأساطير والتجربة الكلاسيكية الصافية.
+                            </li>
+                            <li>
+                                <strong>نقطة الالتقاء - المستقبل السحيق (Breath of the Wild وما بعدها):</strong> ⚠️ يُرجى تأجيلها حتى تنهي المسارات السابقة. هذه الألعاب تكسر كل القواعد الكلاسيكية للسلسلة ومليئة بالتلميحات لتاريخ العوالم السابقة. لعبها مبكراً سيحرمك من فهم وزنها التاريخي، وقد يجعل العودة للتحكم الكلاسيكي في الأجزاء القديمة أمراً محبطاً.
+                            </li>
+                        </ul>
+                    </section>
 
                     <div className="split-label">
                         <span>الانقسام العظيم ⚔️</span>
@@ -98,7 +119,7 @@ export default function TimelinePage() {
                             <GameNode slug="majoras-mask" year="2000" name="Majora's Mask" desc="تكملة مباشرة في عالم موازي" />
 
                             <div className="path-segment"><div className="vertical-line"></div></div>
-                            <GameNode slug="twilight-princess" year="2006" name="Twilight Princess" desc="بعد مئات السنين، لقاء مع شبح البطل القديم" />
+                            <GameNode slug="twilight-princess-hd" year="2006" name="Twilight Princess HD" desc="بعد مئات السنين، لقاء مع شبح البطل القديم" />
 
                             <div className="path-segment flex-grow">
                                 <div className="vertical-line dotted to-convergence"></div>
@@ -114,9 +135,24 @@ export default function TimelinePage() {
 
                             <div className="path-segment">
                                 <div className="vertical-line tall-line"></div>
+                                <div className="side-branch right-branch border-brown">
+                                    <div className="branch-arm border-red"></div>
+                                    <GameNode
+                                        slug="oracle-of-seasons"
+                                        year="2001"
+                                        name="Oracle of Seasons & Oracle of Ages"
+                                        desc="رحلتان مترابطتان لإنقاذ عوالم موازية وإعادة التوازن للطبيعة والزمن."
+                                        isSecondary
+                                        badge="للعب الخفيف 📱"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="path-segment">
+                                <div className="vertical-line tall-line"></div>
                                 <div className="side-branch left-branch border-brown">
                                     <div className="branch-arm border-red"></div>
-                                    <GameNode slug="links-awakening" year="1993" name="Link's Awakening" desc="مغامرة جانبية في جزيرة" isSecondary badge="للعب الخفيف 📱" />
+                                    <GameNode slug="links-awakening-hd" year="1993/2019" name="Link's Awakening" desc="مغامرة جانبية في جزيرة" isSecondary badge="للعب الخفيف 📱" />
                                 </div>
                             </div>
 
@@ -150,6 +186,15 @@ export default function TimelinePage() {
                         <div className="path-segment"><div className="vertical-line"></div></div>
 
                         <GameNode slug="tears-of-the-kingdom" year="2023" name="Tears of the Kingdom" desc="تكملة مباشرة لاستكشاف أعماق وسماء المملكة" />
+
+                        <div className="path-segment"><div className="vertical-line"></div></div>
+
+                        <GameNode
+                            slug="echoes-of-wisdom"
+                            year="2024"
+                            name="Echoes of Wisdom"
+                            desc="منظور جديد كلياً لإنقاذ المملكة، يعتمد على الحكمة وتوظيف بيئة العالم."
+                        />
                     </div>
 
                 </div>

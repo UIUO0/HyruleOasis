@@ -108,6 +108,54 @@ export default function EmulationMobilePage() {
               </li>
             </ol>
           </details>
+
+          <details className="mobile-emu-card">
+            <summary>تطبيق DraStic (لألعاب جهاز DS)</summary>
+            <div className="emu-actions">
+              <a href="https://play.google.com/store/search?q=drastic%20ds%20emulator&c=apps" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل DraStic</a>
+            </div>
+            <ol className="emu-steps">
+              <li>قم بتثبيت التطبيق وافتحه (لا يحتاج ملفات BIOS).</li>
+              <li>اضغط على Load new game.</li>
+              <li>تصفح ملفات هاتفك وحدد المجلد الذي يحتوي على ألعاب DS لفرزها وتشغيلها.</li>
+            </ol>
+          </details>
+
+          <details className="mobile-emu-card">
+            <summary>تطبيق Snes9x EX+ (لألعاب SNES و BS Zelda)</summary>
+            <div className="emu-actions">
+              <a href="https://play.google.com/store/search?q=snes9x%20ex%2B&c=apps" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل Snes9x EX+</a>
+            </div>
+            <ol className="emu-steps">
+              <li>قم بتثبيت التطبيق وافتحه.</li>
+              <li>اضغط على Load Game.</li>
+              <li>تصفح الذاكرة وحدد ملف اللعبة ليبدأ التشغيل فوراً.</li>
+            </ol>
+          </details>
+
+          <details className="mobile-emu-card">
+            <summary>تطبيق RetroArch للأندرويد (لتشغيل ألعاب CD-i والكلاسيكيات)</summary>
+            <div className="emu-actions" style={{ alignItems: "center", gap: "10px", flexWrap: "wrap", display: "flex" }}>
+              <a href="https://www.retroarch.com/?page=platforms" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل RetroArch للأندرويد</a>
+              <a href="https://archive.org/details/philips-cd-i-bios" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-outline">تحميل ملفات CD-i BIOS</a>
+            </div>
+            <ol className="emu-steps">
+              <li>حمل التطبيق وافتحه.</li>
+              <li>انسخ ملفات الـ BIOS الخاصة بـ CD-i وضعها داخل مجلد system الخاص بتطبيق RetroArch في ملفات هاتفك.</li>
+              <li>من داخل التطبيق، اختر Load Core وحمل النواة المناسبة (مثل نواة جهاز CD-i).</li>
+              <li>اختر Load Content وحدد ملف اللعبة لتشغيلها.</li>
+            </ol>
+          </details>
+
+          <details className="mobile-emu-card">
+            <summary>محاكيات بديلة (Yuzu و Suyu و Citra للأندرويد)</summary>
+            <div className="emu-actions" style={{ alignItems: "center", gap: "10px", flexWrap: "wrap", display: "flex" }}>
+              <a href="https://github.com/yuzu-emu/yuzu-android/releases" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل Yuzu للأندرويد</a>
+              <a href="https://github.com/suyu-emu/suyu/releases" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل Suyu للأندرويد</a>
+              <a href="https://github.com/PabloMK7/citra/releases" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-outline">تحميل Citra للأندرويد</a>
+            </div>
+            <p className="body">ثبت التطبيق، أضف ملفات prod.keys (لمحاكيات السويتش)، ثم اضغط على زر + أو Add Folder لاختيار مجلد الألعاب.</p>
+          </details>
         </article>
 
         <article className={`panel mobile-emu-column ios ${activeTab === "ios" ? "is-active" : ""}`}>
@@ -167,6 +215,18 @@ export default function EmulationMobilePage() {
               <li>
                 اختر Add Game Folder وحدد مجلد ألعابك للبدء (ينصح بأجهزة آيفون 15 برو أو آيباد بمعالجات M).
               </li>
+            </ol>
+          </details>
+
+          <details className="mobile-emu-card">
+            <summary>محاكي DolphiniOS (لألعاب GameCube و Wii)</summary>
+            <div className="emu-actions">
+              <a href="https://dolphinios.oatmealdome.me/" target="_blank" rel="noopener noreferrer" className="cta emu-btn emu-btn-primary">تحميل DolphiniOS</a>
+            </div>
+            <ol className="emu-steps">
+              <li>تثبيت هذا المحاكي يتطلب استخدام متجر خارجي مثل AltStore أو Sideloadly.</li>
+              <li>خطوة أساسية للتشغيل: نظام iOS يمنع المحاكي من استخدام كامل قدرات المعالج، لذا يجب تفعيل ميزة JIT (Just-In-Time) عن طريق توصيل الآيفون بالكمبيوتر واستخدام برنامج AltServer لتفعيلها في كل مرة تريد اللعب فيها.</li>
+              <li>بعد التفعيل، افتح المحاكي واضغط على علامة + في الأعلى لإضافة مجلد ألعابك.</li>
             </ol>
           </details>
         </article>

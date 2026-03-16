@@ -87,7 +87,7 @@ export default async function GamePage({ params }: { params: Promise<{ slug: str
                     رجوع لقائمة الألعاب
                   </Link>
                 </div>
-                {game.slug === "ocarina-of-time" && <NativePcPortBanner />}
+                {game.slug === "ocarina-of-time-3d" && <NativePcPortBanner />}
                 {game.downloadNote && (
                   <p className="body" style={{ marginTop: "0.8rem", opacity: 0.75, fontStyle: "italic", fontSize: "0.92em" }}>
                     {game.downloadNote}

@@ -1,4 +1,4 @@
-import type { StoryInterest, Vibe, Platform } from "./quizEngine";
+import type { StoryInterest, Platform } from "./quizEngine";
 
 const QUIZ_STATE_KEY = "hyrule-oasis.quiz-v2";
 
@@ -6,7 +6,6 @@ export interface QuizState {
   playedSlugs: string[];
   storyInterest: StoryInterest | "";
   platforms: Platform[];
-  vibe: Vibe | "";
   resultSlug: string | null;
 }
 
@@ -14,7 +13,6 @@ export const EMPTY_STATE: QuizState = {
   playedSlugs: [],
   storyInterest: "",
   platforms: [],
-  vibe: "",
   resultSlug: null,
 };
 

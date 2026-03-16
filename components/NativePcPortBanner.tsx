@@ -43,10 +43,10 @@ export function NativePcPortBanner() {
           }}
         />
         <h3 style={{ fontSize: "1.2rem", marginBottom: "0.5rem", color: "#e3c878", fontWeight: "bold" }}>
-          ✨ تجربة حصرية لأجهزة الكمبيوتر (PC)
+          ✨ النسخة الأصلية بلمسة ساحرة للـ (PC)
         </h3>
         <p style={{ fontSize: "0.95rem", lineHeight: "1.6", opacity: 0.9 }}>
-          لأن هذه اللعبة تُصنف كأعظم لعبة في التاريخ، مجتمع اللعبة قام بتطوير أداة تشغيل خاصة (Native PC Port) منفصلة تماماً عن المحاكيات العادية. أداؤها وسلاستها تفوق أي طريقة تشغيل أخرى بمراحل وبشكل خيالي. إذا كنت مهتماً بهذه التجربة المثالية، <strong>اضغط هنا للتفاصيل</strong>.
+          شخصياً، <strong>أنصح جداً بلعب النسخة المحسنة الـ (3D)</strong> الموجودة في الأعلى لأنها الأفضل بصرياً وأسهل في التحكم. ولكن للذين يفضلون الحنين ويرغبون بتجربة اللعبة الأصلية (نسخة الـ N64)، فإن مجتمع اللعبة قام بتطوير أداة (Native PC) منفصلة تفوق قوة المحاكيات، تمكنك من لعبها بسلاسة عالية جداً وإطارات غير محدودة. <strong>اضغط هنا للتفاصيل</strong>.
         </p>
       </motion.button>
 
@@ -140,12 +140,38 @@ export function NativePcPortBanner() {
                 <div style={{ background: "rgba(255,255,255,0.03)", padding: "1.2rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
                   <h4 style={{ color: "white", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                     <span style={{ background: "#e3c878", color: "black", width: "24px", height: "24px", display: "inline-flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", fontSize: "0.9rem", fontWeight: "bold" }}>1</span>
-                    تجهيز اللعبة الأساسية
+                    تجهيز اللعبة الأساسية (الروم الأصلي)
                   </h4>
-                  <p style={{ fontSize: "0.9rem", opacity: 0.8, margin: 0 }}>
-                    تحتاج أولاً إلى النسخة الأصلية من اللعبة (نسخة بصيغة <code>.z64</code> وتحديداً الإصدار المدعوم Ocarina of Time 1.0 أو 1.2). <br/>
-                    <em style={{ fontSize: "0.8rem", color: "#aaa" }}>* لأسباب قانونية، يجب عليك توفير هذه النسخة بنفسك من خرطوشتك الأصلية.</em>
+                  <p style={{ fontSize: "0.9rem", opacity: 0.8, marginBottom: "1rem" }}>
+                    تحتاج أولاً إلى النسخة الأصلية من اللعبة (نسخة بصيغة <code>.z64</code> وتحديداً الإصدار المدعوم Ocarina of Time 1.0). وفرناها لك عبر الرابط التالي:
                   </p>
+                  <a 
+                    href="https://romsfun.com/download/the-legend-of-zelda-ocarina-of-time-9581/3" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                      background: "rgba(227, 200, 120, 0.15)",
+                      color: "#e3c878",
+                      border: "1px solid rgba(227, 200, 120, 0.4)",
+                      padding: "0.5rem 1rem",
+                      borderRadius: "6px",
+                      textDecoration: "none",
+                      fontSize: "0.85rem",
+                      fontWeight: "bold",
+                      transition: "all 0.2s"
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.background = "rgba(227, 200, 120, 0.25)";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.background = "rgba(227, 200, 120, 0.15)";
+                    }}
+                  >
+                    ⬇️ تحميل الروم الأصلي (ROM)
+                  </a>
                 </div>
 
                 {/* Step 2 */}

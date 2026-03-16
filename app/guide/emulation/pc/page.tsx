@@ -168,6 +168,97 @@ export default function EmulationPcPage() {
             </li>
           </ol>
         </article>
+
+        <article className="panel emu-era-panel">
+          <p className="kicker">06</p>
+          <h2 className="title">محاكي MelonDS (لألعاب جهاز DS - مثل Tingle)</h2>
+          <p className="kicker">الملفات المطلوبة</p>
+          <div className="emu-actions">
+            <a className="cta emu-btn" href="https://melonds.kuribo64.net/downloads.php" target="_blank" rel="noreferrer">
+              تحميل MelonDS
+            </a>
+            <a className="cta emu-btn" href="https://archive.org/details/nds-firmware-bios.-7z" target="_blank" rel="noreferrer">
+              تحميل ملفات NDS BIOS
+            </a>
+          </div>
+          <ol className="emu-steps">
+            <li>قم بتحميل المحاكي وفك ضغطه.</li>
+            <li>اذهب إلى Config ثم Emu Settings واختر NDS-mode.</li>
+            <li>قم بتحديد مسارات ملفات الـ BIOS الثلاثة (bios9, bios7, firmware) التي قمت بتحميلها.</li>
+            <li>لإضافة اللعبة: اختر File ثم Open ROM وحدد ملف اللعبة.</li>
+          </ol>
+        </article>
+
+        <article className="panel emu-era-panel">
+          <p className="kicker">07</p>
+          <h2 className="title">محاكي Snes9x (لألعاب SNES و BS Zelda)</h2>
+          <p className="kicker">الملفات المطلوبة</p>
+          <div className="emu-actions">
+            <a className="cta emu-btn" href="https://www.snes9x.com/downloads.php" target="_blank" rel="noreferrer">
+              تحميل Snes9x
+            </a>
+          </div>
+          <ol className="emu-steps">
+            <li>حمل المحاكي وفك ضغطه في مجلد (لا يحتاج تثبيت أو ملفات إضافية).</li>
+            <li>افتح المحاكي واضغط على File ثم Load Game.</li>
+            <li>اختر ملف اللعبة (ROM) لتبدأ اللعب مباشرة.</li>
+          </ol>
+        </article>
+
+        <article className="panel emu-era-panel">
+          <p className="kicker">08</p>
+          <h2 className="title">محاكي MAME (للأجهزة النادرة والأركيد مثل Game Watch)</h2>
+          <p className="kicker">الملفات المطلوبة</p>
+          <div className="emu-actions">
+            <a className="cta emu-btn" href="https://www.mamedev.org/release.html" target="_blank" rel="noreferrer">
+              تحميل MAME
+            </a>
+            <a className="cta emu-btn" href="https://archive.org/details/mamebios" target="_blank" rel="noreferrer">
+              تحميل ملفات BIOS للأجهزة النادرة
+            </a>
+          </div>
+          <ol className="emu-steps">
+            <li>قم بتثبيت المحاكي في جهازك.</li>
+            <li>انسخ ملفات الـ BIOS المضغوطة (بدون فك ضغطها) وضعها داخل مجلد roms الموجود في مسار المحاكي.</li>
+            <li>افتح المحاكي، ومن القائمة ابحث عن اسم اللعبة أو اسحب ملف اللعبة وأفلته داخل نافذة المحاكي.</li>
+          </ol>
+        </article>
+
+        <article className="panel emu-era-panel">
+          <p className="kicker">09</p>
+          <h2 className="title">محاكي CDiEmu (لألعاب جهاز Philips CD-i)</h2>
+          <p className="kicker">الملفات المطلوبة</p>
+          <div className="emu-actions">
+            <a className="cta emu-btn" href="https://github.com/cdifan/cdiemu" target="_blank" rel="noreferrer">
+              تحميل CDiEmu
+            </a>
+            <a className="cta emu-btn" href="https://archive.org/details/philips-cd-i-bios" target="_blank" rel="noreferrer">
+              تحميل ملفات CD-i BIOS
+            </a>
+          </div>
+          <ol className="emu-steps">
+            <li>فك ضغط المحاكي وافتحه.</li>
+            <li>من الإعدادات، قم بتحديد مسار ملف الـ BIOS الخاص بجهاز CD-i.</li>
+            <li>اضغط على خيار فتح القرص (Open Image) وحدد ملف اللعبة بصيغة .iso أو .bin.</li>
+          </ol>
+        </article>
+
+        <article className="panel emu-era-panel">
+          <p className="kicker">10</p>
+          <h2 className="title">محاكيات بديلة (Suyu و Citra)</h2>
+          <p className="kicker">الملفات المطلوبة</p>
+          <div className="emu-actions">
+            <a className="cta emu-btn" href="https://github.com/suyu-emu/suyu/releases" target="_blank" rel="noreferrer">
+              تحميل Suyu (بديل لـ Ryujinx)
+            </a>
+            <a className="cta emu-btn" href="https://github.com/PabloMK7/citra/releases" target="_blank" rel="noreferrer">
+              تحميل Citra (بديل لـ Lime3DS)
+            </a>
+          </div>
+          <p className="body">
+            تعمل بنفس طريقة المحاكيات الأساسية. قم بتحميل المحاكي، أضف ملفات الـ Keys والـ Firmware (في حالة Suyu)، ثم حدد مجلد الألعاب من الإعدادات ليتم إدراجها في القائمة.
+          </p>
+        </article>
       </section>
 
       <article className="panel emu-footer-panel">

@@ -50,8 +50,8 @@ const MAINLINE_SLUGS = new Set([
   "the-legend-of-zelda",
   "zelda-ii-the-adventure-of-link",
   "a-link-to-the-past",
-  "links-awakening",
-  "ocarina-of-time",
+
+  "ocarina-of-time-3d",
   "majoras-mask",
   "oracle-of-ages",
   "oracle-of-seasons",
@@ -59,7 +59,7 @@ const MAINLINE_SLUGS = new Set([
   "wind-waker",
   "four-swords-adventures",
   "the-minish-cap",
-  "twilight-princess",
+  "twilight-princess-hd",
   "phantom-hourglass",
   "spirit-tracks",
   "skyward-sword",
@@ -73,11 +73,11 @@ const MAINLINE_SLUGS = new Set([
 
 const SPINOFFS_SLUGS = new Set([
   "links-crossbow-training",
-  "ocarina-of-time-master-quest",
   "hyrule-warriors",
   "picross-twilight-princess",
   "cadence-of-hyrule",
   "age-of-calamity",
+  "battle-quest",
 ]);
 
 type TabKey = "mainline" | "spinoffs" | "archives" | "all";

@@ -5,12 +5,9 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   getAllGamesForCheckbox,
-  needsVibeQuestion,
   recommend,
   type StoryInterest,
-  type Vibe,
   type Platform,
-  type QuizAnswers,
 } from "@/lib/quizEngine";
 import { gameAssetPath } from "@/lib/gameAssets";
 import { loadQuizState, saveQuizState, clearQuizState, EMPTY_STATE, type QuizState } from "@/lib/quizStorage";
@@ -29,18 +26,18 @@ const springTransition = { type: "spring", stiffness: 320, damping: 32 } as cons
 const STORY_OPTIONS: { value: StoryInterest; label: string; desc: string }[] = [
   {
     value: "deep_lore",
-    label: "مهتم بالتفاصيل الكاملة",
-    desc: "أبغى أفهم كل شيء — اللور، الخطوط الزمنية، والتاريخ العميق للسلسلة من البداية.",
+    label: "مهتم بالتفاصيل الكاملة (حوالي 21 لعبة)",
+    desc: "أبغى أفهم كل شيء — هذا المسار يمشيك على ألعاب أسطورة زيلدا المهمة قصصياً كاملة.",
   },
   {
     value: "core_narrative",
-    label: "الأساسيات بس",
-    desc: "أبغى أعرف أهم وأثقل الألعاب في القصة والأحداث الجوهرية.",
+    label: "الأساسيات بس (حوالي 16 لعبة)",
+    desc: "أبغى أمشي على ألعاب الخريطة الزمنية فقط بدون كل الإصدارات الجانبية.",
   },
   {
     value: "modern_peak",
-    label: "عطني الخلاصة",
-    desc: "أبغى ذروة السلسلة تقنياً وقصصياً. أبدأ مباشرة بالأجزاء الحديثة.",
+    label: "ابغى ذروة السلسلة تقنياً فقط (بلعب من 2 إلى 3 فقط)",
+    desc: "أبغى الألعاب الثقيلة الحديثة فقط بأعلى قفزة تقنية وتجربة بصرية.",
   },
 ];
 
@@ -51,33 +48,12 @@ const PLATFORM_OPTIONS: { value: Platform; label: string; icon: string }[] = [
   { value: "switch", label: "نينتندو سويتش", icon: "🎮" },
 ];
 
-const VIBE_OPTIONS: { value: Vibe; label: string; desc: string; emoji: string }[] = [
-  {
-    value: "dark",
-    label: "جو سوداوي ومظلم",
-    desc: "قصة فيها توتر، عالم واقعي قاسي، وأجواء غامضة.",
-    emoji: "🌑",
-  },
-  {
-    value: "bright",
-    label: "جو ملون ومشرق",
-    desc: "استكشاف بحري، عالم مليء بالأمل والمحيطات والألوان.",
-    emoji: "🌊",
-  },
-  {
-    value: "classic",
-    label: "جو كلاسيكي بحت",
-    desc: "عالم يواجه الدمار، والتركيز كله على الألغاز والمتاهات.",
-    emoji: "🏰",
-  },
-];
-
 /* ─── Main component ─── */
 export default function QuizPage() {
   const allGames = useMemo(() => getAllGamesForCheckbox(), []);
 
   const [state, setState] = useState<QuizState>(() => loadQuizState());
-  const [step, setStep] = useState(0); // 0‑4 (0=Q1...3=Q4, 4=result)
+  const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
 
   /* ─── helpers ─── */
@@ -141,72 +117,29 @@ export default function QuizPage() {
     [state, persist]
   );
 
-  /* ─── Q4: vibe ─── */
-  const pickVibe = useCallback(
-    (v: Vibe) => {
-      persist({ ...state, vibe: v });
-    },
-    [state, persist]
-  );
-
-  /* ─── Advance from Q3: decide if we skip Q4 ─── */
+  /* ─── Advance from Q3: compute result ─── */
   const advanceFromQ3 = useCallback(() => {
-    const skipQ4 = !needsVibeQuestion({
-      playedSlugs: state.playedSlugs,
-      storyInterest: state.storyInterest as StoryInterest,
-      platforms: state.platforms,
-    });
-
-    if (skipQ4) {
-      // Compute result immediately, skip to result screen
-      const result = recommend({
-        playedSlugs: state.playedSlugs,
-        storyInterest: state.storyInterest as StoryInterest,
-        platforms: state.platforms,
-        vibe: "dark", // doesn't matter, foundation has result
-      });
-      persist({ ...state, resultSlug: result?.slug ?? null });
-      setDirection(1);
-      setStep(4); // jump to result
-    } else {
-      goNext(); // go to Q4
-    }
-  }, [state, persist, goNext]);
-
-  /* ─── Advance from Q4: compute result ─── */
-  const advanceFromQ4 = useCallback(() => {
     const result = recommend({
       playedSlugs: state.playedSlugs,
       storyInterest: state.storyInterest as StoryInterest,
       platforms: state.platforms,
-      vibe: state.vibe as Vibe,
     });
     persist({ ...state, resultSlug: result?.slug ?? null });
-    goNext();
-  }, [state, persist, goNext]);
+    setDirection(1);
+    setStep(3);
+  }, [state, persist]);
 
-  /* ─── Determine total visible steps (for progress dots) ─── */
-  const showQ4 =
-    state.storyInterest &&
-    state.platforms.length > 0 &&
-    needsVibeQuestion({
-      playedSlugs: state.playedSlugs,
-      storyInterest: state.storyInterest as StoryInterest,
-      platforms: state.platforms,
-    });
-
-  const totalSteps = showQ4 ? 5 : 4; // Q1 Q2 Q3 [Q4] Result
+  const totalSteps = 4;
 
   /* ─── Can advance? ─── */
   const canNext =
     step === 0 ? true : // Q1 can be skipped
       step === 1 ? !!state.storyInterest :
         step === 2 ? state.platforms.length > 0 :
-          step === 3 ? !!state.vibe :
-            false;
+          false;
 
   /* ─── Result game ─── */
-  const resultGame = step === 4 && state.resultSlug ? getGame(state.resultSlug) : null;
+  const resultGame = step === 3 && state.resultSlug ? getGame(state.resultSlug) : null;
 
   return (
     <main className="section quiz-shell">
@@ -215,7 +148,7 @@ export default function QuizPage() {
         {Array.from({ length: totalSteps }).map((_, i) => (
           <span
             key={i}
-            className={`quiz-dot${i === step || (step === 4 && i === totalSteps - 1) ? " is-active" : ""}${i < step ? " is-done" : ""}`}
+            className={`quiz-dot${i === step || (step === 3 && i === totalSteps - 1) ? " is-active" : ""}${i < step ? " is-done" : ""}`}
           />
         ))}
       </div>
@@ -236,7 +169,10 @@ export default function QuizPage() {
           >
             <p className="kicker">السؤال 1 من {totalSteps - 1}</p>
             <h2 className="title">هل قد لعبت لعبة من السلسلة من قبل؟</h2>
-            <p className="body">حدد الألعاب اللي لعبتها عشان أستبعدها من الترشيح. لو ما لعبت شيء تخطّى هالخطوة.</p>
+            <p className="body">
+              عدد ألعاب زيلدا يتجاوز 40+، لكن هنا نركز على 21 لعبة مهمة قصصياً فقط.
+              إذا لعبت لعبة مو موجودة بالقائمة لا تشيل هم، غالباً مو مؤثرة على مسار القصة الرئيسي.
+            </p>
 
             <div className="quiz-checkbox-grid">
               {allGames.map((g) => (
@@ -355,50 +291,6 @@ export default function QuizPage() {
         )}
 
         {step === 3 && (
-          <motion.article
-            key="q4"
-            className="panel quiz-step"
-            style={{ width: "min(820px, 100%)" }}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={springTransition}
-          >
-            <p className="kicker">السؤال 4 من {totalSteps - 1}</p>
-            <h2 className="title">أي جو (Vibe) يشدك تكمل فيه مغامرتك؟</h2>
-            <p className="body">
-              لو افترضنا إنك وصلت لمفترق طرق في عالم السلسلة، أي اتجاه تختار؟
-            </p>
-
-            <div className="quiz-radio-group">
-              {VIBE_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  className={`quiz-radio-card${state.vibe === opt.value ? " is-selected" : ""}`}
-                  onClick={() => pickVibe(opt.value)}
-                >
-                  <span className="quiz-vibe-emoji">{opt.emoji}</span>
-                  <strong>{opt.label}</strong>
-                  <span>{opt.desc}</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="quiz-nav">
-              <button className="cta" type="button" onClick={goPrev}>
-                → السابق
-              </button>
-              <button className="cta" type="button" onClick={advanceFromQ4} disabled={!canNext}>
-                شوف النتيجة ←
-              </button>
-            </div>
-          </motion.article>
-        )}
-
-        {step === 4 && (
           <motion.article
             key="result"
             className="panel quiz-step"

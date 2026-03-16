@@ -15,5 +15,5 @@ export const GAME_SLUG_EXAMPLES = {
   tearsOfTheKingdom: "tears-of-the-kingdom",
   ocarinaOfTime: "ocarina-of-time",
   windWaker: "wind-waker",
-  twilightPrincess: "twilight-princess"
+  twilightPrincess: "twilight-princess-hd"
 } as const;
